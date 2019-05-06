@@ -73,8 +73,14 @@ public abstract class Organism implements Comparator<Organism> {
 	public int GetAge() {
         return this.age;
     }
+    public void SetAge(int value) {
+        this.age = value;
+    }
 	public char GetImage() {
         return this.image;
+    }
+    public void SetWorldRef(World w) {
+        this.world = w;
     }
 
     public abstract boolean IsAnimal();

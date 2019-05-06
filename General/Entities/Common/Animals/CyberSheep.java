@@ -6,6 +6,9 @@ import VirtualWorldJava.General.Entities.Abstract.Organism;
 
 public class CyberSheep extends Animal<CyberSheep> {
 
+    public CyberSheep() {
+        super(11, 4, 0, 'C', null);
+    }
     public CyberSheep(int a, World w) {
         super(11, 4, a, 'C', w);
     }

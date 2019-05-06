@@ -8,8 +8,11 @@ import VirtualWorldJava.General.Navigation.WorldDirections;
 import VirtualWorldJava.General.Navigation.Point;
 import VirtualWorldJava.General.Utilities.Utilities;
 
-class Antelope extends Animal<Antelope> {
-	
+public class Antelope extends Animal<Antelope> {
+    
+    public Antelope() {
+        super(4, 4, 0, 'A', null);
+    }
     public Antelope(int a, World w) {
         super(4, 4, a, 'A', w);
     }

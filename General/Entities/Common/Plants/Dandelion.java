@@ -5,6 +5,9 @@ import VirtualWorldJava.General.Entities.Abstract.Plant;
 
 public class Dandelion extends Plant<Dandelion> {
 
+    public Dandelion() {
+        super(0, 0, 'D', null, 0.05f);
+    }
     public Dandelion(int a, World w) {
         super(0, a, 'D', w, 0.05f);
     }

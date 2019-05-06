@@ -7,6 +7,7 @@ import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Entities.Abstract.Entities;
 import VirtualWorldJava.General.Entities.Unique.Human;
 import VirtualWorldJava.General.Navigation.*;
+import VirtualWorldJava.General.Utilities.Functional.ToKill;
 
 public class World {
 
@@ -54,10 +55,16 @@ public class World {
     //#region PRIVATE_FUNCTIONS
 
     private void Populate(int n) {
-        //TO DO
+        for (Entities entity : Entities.values()) {
+            Organism o = entity.Create();
+            o.SetAge(this.GetAge());
+            o.SetWorldRef(this);
+            AddToWorld(o, Navigation.NULL_POINT);
+        }
     }
     private Organism Create(char c, int a) {
         //TO DO
+        return null;
     }
 
     private void NextTurn() {
@@ -133,10 +140,10 @@ public class World {
     }
 
     public void AddToWorld(Organism o, Point p) {
-        born.push_back(o);
+        born.add(o);
 
         if (p == Navigation.NULL_POINT) {
-            this.board.SetAt(o, Navigation.NULL_POINT);
+            this.board.SetAt(Navigation.NULL_POINT, o);
         }
         else {
             this.board.SetAt(p, o);
@@ -144,32 +151,32 @@ public class World {
     }
     public void RemoveFromWorld(Organism o) {
         this.board.KillAt(o.GetLocation());
-	    this.dead.push_back(o);
+	    this.dead.add(o);
     }
-    public void RemoveFromWorld(String s, Point p, boolean(ToKill)(Organism o)) {
-        int x = (p.x - 1 < 0) ? 0 : p.x - 1;
-        int yB = (p.y - 1 < 0) ? 0 : p.y - 1;
+    public void RemoveFromWorld(String s, Point p, ToKill foo) {
+        int x = (p.GetX() - 1 < 0) ? 0 : p.GetX() - 1;
+        int yB = (p.GetY() - 1 < 0) ? 0 : p.GetY() - 1;
 
-        int xMax = (p.x + 1 == board.GetRow()) ? p.x : p.x + 1;
-        int yMax = (p.y + 1 == board.GetCol()) ? p.y : p.y + 1;
+        int xMax = (p.GetX() + 1 == board.GetRow()) ? p.GetX() : p.GetX() + 1;
+        int yMax = (p.GetY() + 1 == board.GetCol()) ? p.GetY() : p.GetY() + 1;
 
-        Point temp;
+        Point temp = new Point(0, 0);
         Organism o;
 
         for (; x <= xMax; x++) {
             for (int y = yB; y <= yMax; y++) {
-                if (x == p.x && y == p.y) {
+                if (x == p.GetX() && y == p.GetX()) {
                     continue;
                 }
 
-                temp.x = x;
-                temp.y = y;
+                temp.SetX(x);
+                temp.SetY(y);
 
                 o = board.GetAt(temp);
                 if (o == null) {
                     continue;
                 }
-                if (ToKill(o) == false) {
+                if (foo.kill(o) == false) {
                     continue;
                 }
 
@@ -199,6 +206,7 @@ public class World {
     }
     public WorldDirections GetInput(WorldDirections dir, Point p) {
         //TO DO
+        return WorldDirections.DIR_NULL;
     }
     public void ClearOutput() {
         //TO DO
@@ -207,3 +215,4 @@ public class World {
     //#endregion
 
 }
+

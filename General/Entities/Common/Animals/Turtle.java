@@ -6,6 +6,10 @@ import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Utilities.Utilities;
 
 public class Turtle extends Animal<Turtle> {
+
+    public Turtle() {
+        super(2, 1, 0, 'T', null);
+    }
     public Turtle(int a, World w) {
         super(2, 1, a, 'T', w);
     }
@@ -29,4 +33,5 @@ public class Turtle extends Animal<Turtle> {
     public String toString() {
         return "Turtle";
     }
+
 };

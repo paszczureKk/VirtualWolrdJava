@@ -5,8 +5,11 @@ import VirtualWorldJava.General.Entities.Abstract.Animal;
 import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Navigation.*;
 
-class Fox extends Animal<Fox> {
+public class Fox extends Animal<Fox> {
 
+    public Fox() {
+        super(3, 7, 0, 'F', null);
+    }
     public Fox(int a, World w) {
         super(3, 7, a, 'F', w);
     }
