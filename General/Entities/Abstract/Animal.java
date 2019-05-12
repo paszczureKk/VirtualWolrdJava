@@ -3,10 +3,10 @@ package VirtualWorldJava.General.Entities.Abstract;
 import VirtualWorldJava.General.World;
 import VirtualWorldJava.General.Navigation.*;
 
-public abstract class Animal<T> extends Organism {
+public abstract class Animal<T extends Organism> extends Organism {
 
-    public Animal(int s, int i, int a, char ch, World w) {
-        super(s, i, a, ch, w);
+    public Animal(int s, int i, int a, World w) {
+        super(s, i, a, w);
     }
 
     @Override
@@ -30,12 +30,18 @@ public abstract class Animal<T> extends Organism {
                 return false;
             }
 
-            Organism org = (Organism)(new T(world->GetAge(), world));
-            world.AddToWorld(org, p);
+            try {
+                Organism org = this.getClass().getConstructor(int.class, World.class).newInstance(this.world.GetAge(), this.world);
 
-            world.Notify(this.toString() + " has been born on " + p.toString());
+                world.AddToWorld(org, p);
+    
+                world.Notify(this.toString() + " has been born on " + p.toString());
+    
+                return false;
+            } catch (Exception e) {
+                return false;
+            }
 
-            return false;
         }
 
         return true;

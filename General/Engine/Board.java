@@ -16,6 +16,7 @@ public class Board {
         this.world = w;
 
         this.organisms = new Organism[r * c];
+        this.seekBuffer = new Vector<Point>();
 
         for (int i = 0; i < this.row * this.col; i++) {
             this.organisms[i] = null;
@@ -44,16 +45,19 @@ public class Board {
         int x = (p.GetX() - 1 < 0) ? 0 : p.GetX() - 1;
         int y = (p.GetY() - 1 < 0) ? 0 : p.GetY() - 1;
 
-        int xMax = (p.GetX() + 1 == row) ? p.GetX() : p.GetX() + 1;
-        int yMax = (p.GetY() + 1 == col) ? p.GetY() : p.GetY() + 1;
+        int xMax = (p.GetX() + 1 == this.row) ? p.GetX() : p.GetX() + 1;
+        int yMax = (p.GetY() + 1 == this.col) ? p.GetY() : p.GetY() + 1;
 
-        Point temp = new Point(0, 0);
+        
 
         for (; x <= xMax; x++) {
             for (; y <= yMax; y++) {
+
                 if (x == p.GetX() && y == p.GetY()) {
                     continue;
                 }
+
+                Point temp = new Point(0, 0);
 
                 temp.SetX(x);
                 temp.SetY(y);
@@ -68,17 +72,18 @@ public class Board {
             return Navigation.NULL_POINT;
         }
 
-        return seekBuffer.get(Utilities.random(0, seekBuffer.size()));
+        return seekBuffer.get(Utilities.random(0, seekBuffer.size() - 1));
     }
 
     public void SetAt(Organism o) {
+
         seekBuffer.clear();
 
-        Point temp = new Point(0, 0);
     
         for (int x = 0; x < this.row; x++) {
             for (int y = 0; y < this.col; y++) {
     
+                Point temp = new Point(0, 0);
                 temp.SetX(x);
                 temp.SetY(y);
     
@@ -87,7 +92,8 @@ public class Board {
                 }
             }
         }
-    
+
+
         if (seekBuffer.size() == 0) {
             return;
         }
@@ -96,7 +102,9 @@ public class Board {
             this.organisms[this.GetIndex(o.GetLocation())] = null;
         }
     
-        temp = seekBuffer.get(Utilities.random(0, seekBuffer.size()));
+        
+        Point temp = seekBuffer.get(Utilities.random(0, seekBuffer.size() - 1));
+
         o.SetLocation(temp);
         this.organisms[GetIndex(temp)] = o;
     }
@@ -125,10 +133,6 @@ public class Board {
         return this.organisms[this.GetIndex(p)];
     }
 
-    public void Draw() {
-        //to do
-    }
-
     private int row;
     private int col;
     private Organism[] organisms;
@@ -138,7 +142,7 @@ public class Board {
     private Vector<Point> seekBuffer;
 
     private int GetIndex(Point p) {
-        return p.GetY() * row + p.GetX();
+        return p.GetY() * this.row + p.GetX();
     }
 
 };

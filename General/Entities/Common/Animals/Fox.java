@@ -1,6 +1,9 @@
 package VirtualWorldJava.General.Entities.Common.Animals;
 
+import javax.swing.ImageIcon;
+
 import VirtualWorldJava.General.World;
+import VirtualWorldJava.General.Engine.ImageLoader;
 import VirtualWorldJava.General.Entities.Abstract.Animal;
 import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Navigation.*;
@@ -8,11 +11,17 @@ import VirtualWorldJava.General.Navigation.*;
 public class Fox extends Animal<Fox> {
 
     public Fox() {
-        super(3, 7, 0, 'F', null);
+        super(3, 7, 0, null);
     }
     public Fox(int a, World w) {
-        super(3, 7, a, 'F', w);
+        super(3, 7, a, w);
     }
+    
+    @Override
+    public ImageIcon GetImage() {
+        return ImageLoader.fox;
+    }
+
     public void Action() {
         Point newP = Navigation.Translate(location, WorldDirections.DIR_NULL);
 

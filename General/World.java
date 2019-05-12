@@ -1,5 +1,6 @@
 package VirtualWorldJava.General;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import VirtualWorldJava.General.Engine.Board;
@@ -8,32 +9,20 @@ import VirtualWorldJava.General.Entities.Abstract.Entities;
 import VirtualWorldJava.General.Entities.Unique.Human;
 import VirtualWorldJava.General.Navigation.*;
 import VirtualWorldJava.General.Utilities.Functional.ToKill;
+import VirtualWorldJava.General.Engine.Layout;
 
 public class World {
 
     //#region CONSTUCTOR
 
-    public World(int rows, int cols, int oc) {
+    public World() {
+        this.organisms = new ArrayList<Organism>();
+        this.born = new ArrayList<Organism>();
+        this.dead = new ArrayList<Organism>();
 
-        organisms = new List<Organism>();
-        born = new List<Organism>();
-        dead = new List<Organism>();
+        this.organismsC = 0;
 
-        organismsC = 0;
-
-        //layout = new Layout;
-        this.LayoutInit(rows, cols);
-
-        board = new Board(rows, cols, this);
-
-        player = new Human(this.GetAge(), this);
-        this.AddToWorld((Organism)player, Navigation.NULL_POINT);
-
-        this.Populate(oc);
-
-        //this.DrawOutline(layout.GetBoardX() - 1, layout.GetBoardY() - 1, board.GetRow() + 2, board.GetCol() + 2);
-        this.DrawLegend();
-
+        this.layout = new Layout(this);
     }
 
     //#endregion
@@ -41,7 +30,7 @@ public class World {
     //#region PRIVATE_VARIABLES
 
     Board board;
-    //Layout layout;
+    Layout layout;
 
     int organismsC;
     Human player;
@@ -50,17 +39,22 @@ public class World {
     List<Organism> born;
     List<Organism> dead;
 
+    WorldDirections direction;
+
     //#endregion
 
     //#region PRIVATE_FUNCTIONS
 
     private void Populate(int n) {
-        for (Entities entity : Entities.values()) {
-            Organism o = entity.Create();
-            o.SetAge(this.GetAge());
-            o.SetWorldRef(this);
-            AddToWorld(o, Navigation.NULL_POINT);
+        for(int i = 0; i < n; i++) {
+            for (Entities entity : Entities.values()) {
+                Organism o = entity.Create();
+                o.SetAge(this.GetAge());
+                o.SetWorldRef(this);
+                AddToWorld(o, Navigation.NULL_POINT);
+            }
         }
+        
     }
     private Organism Create(char c, int a) {
         //TO DO
@@ -101,19 +95,25 @@ public class World {
         //TO DO
     }
 
-    private void Save() {
-        //TO DO
-    }
-    private void Load() {
-        //TO DO
-    }
+    
 
     //#endregion
 
     //#region PUBLIC_FUNCTIONS
 
-    public void LayoutInit(int r, int c) {
+    public void Init(int rows, int cols, int oc) {
 
+        this.board = new Board(rows, cols, this);
+
+        this.player = new Human(this.GetAge(), this);
+        this.AddToWorld((Organism)player, Navigation.NULL_POINT);
+
+        this.Populate(oc);
+
+        //this.DrawOutline(layout.GetBoardX() - 1, layout.GetBoardY() - 1, board.GetRow() + 2, board.GetCol() + 2);
+        this.DrawLegend();
+
+        this.Start();
     }
 
     public int GetAge() {
@@ -122,9 +122,9 @@ public class World {
     public void SetAge(int value) {
         this.organismsC = value;
     }
-    /*public Layout GetLayout() {
+    public Layout GetLayout() {
         return this.layout;
-    }*/
+    }
 
     public void Start() {
         while (player.IsAlive()) {
@@ -143,14 +143,16 @@ public class World {
         born.add(o);
 
         if (p == Navigation.NULL_POINT) {
-            this.board.SetAt(Navigation.NULL_POINT, o);
+            this.board.SetAt(o);
         }
         else {
             this.board.SetAt(p, o);
         }
+        this.layout.Update(o);
     }
     public void RemoveFromWorld(Organism o) {
         this.board.KillAt(o.GetLocation());
+        this.layout.Update(o);
 	    this.dead.add(o);
     }
     public void RemoveFromWorld(String s, Point p, ToKill foo) {
@@ -181,6 +183,7 @@ public class World {
                 }
 
                 o.Kill(s);
+                this.layout.Update(o);
             }
         }
     }
@@ -195,20 +198,30 @@ public class World {
         return board.GetAt(p);
     }
     public Organism MoveTo(Point p, Organism o) {
-	    return board.SetAt(p, o);
+        Organism org = board.SetAt(p, o);
+        this.layout.Update(o);
+        this.layout.Clear(p);
+
+        return org;
     }
 
     public void Draw() {
-        board.Draw();
+        layout.Draw();
     }
     public void LegendUpdate(WorldDirections dir, String s) {
         //TO DO
     }
-    public WorldDirections GetInput(WorldDirections dir, Point p) {
-        //TO DO
-        return WorldDirections.DIR_NULL;
+    public void ClearInput() {
+        this.direction = WorldDirections.DIR_NULL;
     }
     public void ClearOutput() {
+        //TO DO
+    }
+
+    public void Save() {
+        //TO DO
+    }
+    public void Load() {
         //TO DO
     }
 

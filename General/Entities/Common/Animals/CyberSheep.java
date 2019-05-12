@@ -1,17 +1,26 @@
 package VirtualWorldJava.General.Entities.Common.Animals;
 
+import javax.swing.ImageIcon;
+
 import VirtualWorldJava.General.World;
+import VirtualWorldJava.General.Engine.ImageLoader;
 import VirtualWorldJava.General.Entities.Abstract.Animal;
 import VirtualWorldJava.General.Entities.Abstract.Organism;
 
 public class CyberSheep extends Animal<CyberSheep> {
 
     public CyberSheep() {
-        super(11, 4, 0, 'C', null);
+        super(11, 4, 0, null);
     }
     public CyberSheep(int a, World w) {
-        super(11, 4, a, 'C', w);
+        super(11, 4, a, w);
     }
+    
+    @Override
+    public ImageIcon GetImage() {
+        return ImageLoader.cybersheep;
+    }
+
     public void Action() {
         super.Action();
     }

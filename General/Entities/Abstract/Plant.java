@@ -4,10 +4,10 @@ import VirtualWorldJava.General.Utilities.Utilities;
 import VirtualWorldJava.General.World;
 import VirtualWorldJava.General.Navigation.Point;
 
-public abstract class Plant<T> extends Organism {
+public abstract class Plant<T extends Organism> extends Organism {
 
-    public Plant(int s, int a, char ch, World w, float p) {
-        super(s, 0, a, ch, w);
+    public Plant(int s, int a, World w, float p) {
+        super(s, 0, a, w);
         probability = p;
     }
 
@@ -24,10 +24,17 @@ public abstract class Plant<T> extends Organism {
             return;
         }
 
-        Organism org = (Organism)(new T(world.GetAge(), world));
-        world.AddToWorld(org, p);
+            try {
+                Organism org = this.getClass().getConstructor(int.class, World.class).newInstance(this.world.GetAge(), this.world);
 
-        world.Notify(this.toString() + " has grown on " + p.toString());
+                world.AddToWorld(org, p);
+    
+                world.Notify(this.toString() + " has grown on " + p.toString());
+    
+                return;
+            } catch (Exception e) {
+                return;
+            }
     }
     @Override
     public boolean Collision(Organism o) {

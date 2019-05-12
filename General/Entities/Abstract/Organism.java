@@ -1,21 +1,20 @@
 package VirtualWorldJava.General.Entities.Abstract;
 
-import java.util.Comparator;
+import javax.swing.ImageIcon;
 
 import VirtualWorldJava.General.World;
 import VirtualWorldJava.General.Navigation.*;
 
-public abstract class Organism implements Comparator<Organism> {
+public abstract class Organism implements Comparable<Organism> {
     
     //#region CONSTUCTOR
 
-    public Organism(int s, int i, int a, char ch, World w) {
+    public Organism(int s, int i, int a, World w) {
 
         this.strength = s;
         this.initiative = i;
         this.age = a;
         this.location = Navigation.NULL_POINT;
-        this.image = ch;
         this.world = w;
         this.alive = true;
 
@@ -29,7 +28,6 @@ public abstract class Organism implements Comparator<Organism> {
     protected int initiative;
     protected int age;
     protected Point location;
-    protected char image;
     protected World world;
     protected boolean alive;
 
@@ -76,9 +74,9 @@ public abstract class Organism implements Comparator<Organism> {
     public void SetAge(int value) {
         this.age = value;
     }
-	public char GetImage() {
-        return this.image;
-    }
+
+    public abstract ImageIcon GetImage();
+    
     public void SetWorldRef(World w) {
         this.world = w;
     }
@@ -89,10 +87,8 @@ public abstract class Organism implements Comparator<Organism> {
     }
     
     public abstract void Action();
-	public abstract boolean Collision(Organism o);
-	public void Draw() {
-        System.out.println(this.image);
-    }
+    public abstract boolean Collision(Organism o);
+    
     public abstract void Move(Point p);
     
     public void Kill(String s) {
@@ -105,10 +101,9 @@ public abstract class Organism implements Comparator<Organism> {
     }
 
     
-    @Override
-    public int compare(Organism current, Organism other) {
-        if (current.GetInitiative() != other.GetInitiative()) {
-            if(current.GetInitiative() > other.GetInitiative()) {
+    public int compareTo(Organism other) {
+        if (this.GetInitiative() != other.GetInitiative()) {
+            if(this.GetInitiative() > other.GetInitiative()) {
                 return 1;
             }
             else {
@@ -116,11 +111,11 @@ public abstract class Organism implements Comparator<Organism> {
             }
         }
         else {
-            if(current.GetAge() > other.GetAge()) {
+            if(this.GetAge() > other.GetAge()) {
                 return 1;
             }
             else {
-                if(current.GetAge() < other.GetAge()) {
+                if(this.GetAge() < other.GetAge()) {
                     return -1;
                 }
                 else {

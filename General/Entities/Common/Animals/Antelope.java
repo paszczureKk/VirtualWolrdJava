@@ -1,6 +1,9 @@
 package VirtualWorldJava.General.Entities.Common.Animals;
 
+import javax.swing.ImageIcon;
+
 import VirtualWorldJava.General.World;
+import VirtualWorldJava.General.Engine.ImageLoader;
 import VirtualWorldJava.General.Entities.Abstract.Animal;
 import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Navigation.Navigation;
@@ -11,11 +14,17 @@ import VirtualWorldJava.General.Utilities.Utilities;
 public class Antelope extends Animal<Antelope> {
     
     public Antelope() {
-        super(4, 4, 0, 'A', null);
+        super(4, 4, 0, null);
     }
     public Antelope(int a, World w) {
-        super(4, 4, a, 'A', w);
+        super(4, 4, a, w);
     }
+    
+    @Override
+    public ImageIcon GetImage() {
+        return ImageLoader.antelope;
+    }
+
     public void Action() {
         for (int i = 0; i < 2; i++) {
             if (this.IsAlive() == true) {

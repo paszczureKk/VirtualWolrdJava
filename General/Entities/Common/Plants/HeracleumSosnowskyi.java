@@ -1,17 +1,26 @@
 package VirtualWorldJava.General.Entities.Common.Plants;
 
+import javax.swing.ImageIcon;
+
 import VirtualWorldJava.General.World;
+import VirtualWorldJava.General.Engine.ImageLoader;
 import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Entities.Abstract.Plant;
 
 public class HeracleumSosnowskyi extends Plant<HeracleumSosnowskyi> {
     
     public HeracleumSosnowskyi() {
-        super(10, 0, 'H', null, 0.01f);
+        super(10, 0, null, 0.01f);
     }
     public HeracleumSosnowskyi(int a, World w) {
-        super(10, a, 'H', w, 0.01f);
+        super(10, a, w, 0.01f);
     }
+
+    @Override
+    public ImageIcon GetImage() {
+        return ImageLoader.heracleum;
+    }
+
     public void Action() {
         this.world.RemoveFromWorld(this.toString(), this.location, 
         (Organism o) -> {
