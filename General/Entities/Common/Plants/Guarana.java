@@ -20,6 +20,10 @@ public class Guarana extends Plant<Guarana> {
     public ImageIcon GetImage() {
         return ImageLoader.guarana;
     }
+    @Override
+    public char GetToken() {
+        return 'U';
+    }
 
     public boolean Collision(Organism o) {
         o.Buff(3);

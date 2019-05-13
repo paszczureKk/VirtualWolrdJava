@@ -19,6 +19,10 @@ public class Antelope extends Animal<Antelope> {
     public Antelope(int a, World w) {
         super(4, 4, a, w);
     }
+    @Override
+    public char GetToken() {
+        return 'A';
+    }
     
     @Override
     public ImageIcon GetImage() {

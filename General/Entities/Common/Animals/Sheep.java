@@ -19,6 +19,10 @@ public class Sheep extends Animal<Sheep> {
     public ImageIcon GetImage() {
         return ImageLoader.sheep;
     }
+    @Override
+    public char GetToken() {
+        return 'S';
+    }
 
     @Override
     public String toString() {

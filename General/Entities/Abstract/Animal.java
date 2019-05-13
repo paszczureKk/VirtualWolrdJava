@@ -54,17 +54,21 @@ public abstract class Animal<T extends Organism> extends Organism {
 
     @Override
     public void Move(Point p) {
-        Organism o = world.MoveTo(p, this);
+
+        Organism o = world.GetAt(p);
 
         if (o == null) {
-            return;
+            world.MoveTo(p, this);
         }
-
-        if (o.Collision(this) == true) {
-            if (this.Collision(o) == true) {
-                Fight(o);
+        else {
+            if (o.Collision(this) == true) {
+                if (this.Collision(o) == true) {
+                    Fight(o);
+                }
             }
         }
+
+        
     }
     public void Kill(String s) {
         super.Kill(this.toString() + " has been slain by " + s);

@@ -21,6 +21,10 @@ public class Turtle extends Animal<Turtle> {
     public ImageIcon GetImage() {
         return ImageLoader.turtle;
     }
+    @Override
+    public char GetToken() {
+        return 'T';
+    }
 
     public void Action() {
         if (0.25f < Utilities.random(0.0f, 1.0f)) {

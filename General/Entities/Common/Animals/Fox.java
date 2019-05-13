@@ -21,6 +21,10 @@ public class Fox extends Animal<Fox> {
     public ImageIcon GetImage() {
         return ImageLoader.fox;
     }
+    @Override
+    public char GetToken() {
+        return 'F';
+    }
 
     public void Action() {
         Point newP = Navigation.Translate(location, WorldDirections.DIR_NULL);

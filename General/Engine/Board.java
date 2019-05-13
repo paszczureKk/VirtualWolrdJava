@@ -2,7 +2,6 @@ package VirtualWorldJava.General.Engine;
 
 import java.util.Vector;
 
-import VirtualWorldJava.General.World;
 import VirtualWorldJava.General.Entities.Abstract.Organism;
 import VirtualWorldJava.General.Navigation.Navigation;
 import VirtualWorldJava.General.Navigation.Point;
@@ -10,10 +9,9 @@ import VirtualWorldJava.General.Utilities.Utilities;
 
 public class Board {
 
-    public Board(int r, int c, World w) {
+    public Board(int r, int c) {
         this.row = r;
         this.col = c;
-        this.world = w;
 
         this.organisms = new Organism[r * c];
         this.seekBuffer = new Vector<Point>();
@@ -108,21 +106,18 @@ public class Board {
         o.SetLocation(temp);
         this.organisms[GetIndex(temp)] = o;
     }
-    public Organism SetAt(Point p, Organism organism) {
+    public void SetAt(Point p, Organism organism) {
         if (this.Validate(p) == false) {
-            return null;
+            return;
         }
     
-        Organism o = this.GetAt(p);
-        if (o == null) {
-            if (!(organism.GetLocation() == Navigation.NULL_POINT)) {
-                this.organisms[this.GetIndex(organism.GetLocation())] = null;
-            }
-            organism.SetLocation(p);
-            this.organisms[GetIndex(p)] = organism;
-        }
         
-        return o;
+        if (!(organism.GetLocation() == Navigation.NULL_POINT)) {
+            this.organisms[this.GetIndex(organism.GetLocation())] = null;
+        }
+        organism.SetLocation(p);
+        this.organisms[GetIndex(p)] = organism;
+        
     }
 
     public void KillAt(Point p) {
@@ -137,12 +132,28 @@ public class Board {
     private int col;
     private Organism[] organisms;
 
-    private World world;
-
     private Vector<Point> seekBuffer;
 
     private int GetIndex(Point p) {
         return p.GetY() * this.row + p.GetX();
+    }
+
+    public void Print() {
+        Point p = new Point(0,0);
+        for(int y = 0; y < this.row; y++) {
+            for (int x = 0; x < this.col; x++) {
+                p.Set(x, y);
+                Organism o = GetAt(p);
+                if(o == null) {
+                    System.out.print("null");
+                }
+                else {
+                    System.out.print(o.toString());
+                }
+                System.out.print(" " + p.toString() + ",");
+            }
+            System.out.println();
+        }
     }
 
 };

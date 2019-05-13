@@ -19,6 +19,10 @@ public class Wolf extends Animal<Wolf> {
     public ImageIcon GetImage() {
         return ImageLoader.wolf;
     }
+    @Override
+    public char GetToken() {
+        return 'W';
+    }
 
     @Override
     public String toString() {

@@ -74,6 +74,7 @@ public abstract class Organism implements Comparable<Organism> {
     public void SetAge(int value) {
         this.age = value;
     }
+    public abstract char GetToken();
 
     public abstract ImageIcon GetImage();
     

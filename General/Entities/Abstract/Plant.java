@@ -2,6 +2,7 @@ package VirtualWorldJava.General.Entities.Abstract;
 
 import VirtualWorldJava.General.Utilities.Utilities;
 import VirtualWorldJava.General.World;
+import VirtualWorldJava.General.Navigation.Navigation;
 import VirtualWorldJava.General.Navigation.Point;
 
 public abstract class Plant<T extends Organism> extends Organism {
@@ -20,7 +21,7 @@ public abstract class Plant<T extends Organism> extends Organism {
 
         Point p = world.SeekForFree(location);
 
-        if (p == null) {
+        if (p == Navigation.NULL_POINT) {
             return;
         }
 

@@ -19,6 +19,10 @@ public class Grass extends Plant<Grass> {
     public ImageIcon GetImage() {
         return ImageLoader.grass;
     }
+    @Override
+    public char GetToken() {
+        return 'G';
+    }
 
     @Override
     public String toString() {

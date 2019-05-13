@@ -20,6 +20,10 @@ public class HeracleumSosnowskyi extends Plant<HeracleumSosnowskyi> {
     public ImageIcon GetImage() {
         return ImageLoader.heracleum;
     }
+    @Override
+    public char GetToken() {
+        return 'H';
+    }
 
     public void Action() {
         this.world.RemoveFromWorld(this.toString(), this.location, 

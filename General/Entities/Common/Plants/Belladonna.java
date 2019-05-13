@@ -20,11 +20,14 @@ public class Belladonna extends Plant<Belladonna> {
     public ImageIcon GetImage() {
         return ImageLoader.belladonna;
     }
+    @Override
+    public char GetToken() {
+        return 'B';
+    }
     
     public boolean Collision(Organism o) {
         o.Kill(this.toString());
-
-        super.Collision(o);
+        this.Kill(o.toString());
     
         return false;
     }

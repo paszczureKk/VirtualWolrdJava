@@ -8,7 +8,7 @@ public class Navigation {
     
 	public static Point Translate(Point p, WorldDirections dir) {
 		if (dir == WorldDirections.DIR_NULL) {
-            dir = WorldDirections.values()[Utilities.random(0, WorldDirections.DIRECTIONS_COUNT.ordinal())];
+            dir = WorldDirections.values()[Utilities.random(0, WorldDirections.DIRECTIONS_COUNT.ordinal() - 1)];
 		}
 
         Point point = new Point(p.GetX(), p.GetY());

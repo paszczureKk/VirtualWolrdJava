@@ -19,6 +19,10 @@ public class Dandelion extends Plant<Dandelion> {
     public ImageIcon GetImage() {
         return ImageLoader.dandelion;
     }
+    @Override
+    public char GetToken() {
+        return 'D';
+    }
 
     public void Action() {
         for (int i = 0; i < 3; i++) {

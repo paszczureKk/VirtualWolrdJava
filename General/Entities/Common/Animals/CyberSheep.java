@@ -20,6 +20,10 @@ public class CyberSheep extends Animal<CyberSheep> {
     public ImageIcon GetImage() {
         return ImageLoader.cybersheep;
     }
+    @Override
+    public char GetToken() {
+        return 'C';
+    }
 
     public void Action() {
         super.Action();
